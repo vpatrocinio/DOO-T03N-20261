@@ -41,11 +41,12 @@ public class Principal{
 	}
 
     public static void calcularPreco(){
-        
-        System.out.println("Por favor entre com o valor do produto: ");
-        double valor = scan.nextDouble();
+
         System.out.println("Por favor entre com a quatidade do produto: ");
         int qtd = scan.nextInt();
+        System.out.println("Por favor entre com o valor do produto: ");
+        double valor = scan.nextDouble();
+        
 
         resultado = (valor * qtd);
 
@@ -53,10 +54,12 @@ public class Principal{
     }
 
     public static void calcularTroco(){
-        System.out.println("Por favor entre com o valor pago: ");
+        System.out.println("Por favor entre com o valor pago pelo cliente: ");
         double valorPago = scan.nextDouble();
+        System.out.println("Digite o valor total da compra: ");
+        double valorCompra = scan.nextDouble();
 
-        double troco = valorPago - resultado;
+        double troco = valorPago - valorCompra;
 
         if(troco < 0){
             System.out.println("Valor pago é insuficiente...");
