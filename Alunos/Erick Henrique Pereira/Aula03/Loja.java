@@ -55,16 +55,19 @@ public class Loja {
     public static void calculaTotal(Scanner scan, Calculadora calc){
         System.out.println("Digite a quantidade do produto:");
         int quantidade = scan.nextInt();
+        double totalcomdesc;
         System.out.println("Digite o preço do produto:");
         double preco = scan.nextDouble();
         double total = preco * quantidade;
         if(quantidade > 10){
-            total = total *0.95;
+            totalcomdesc = total *0.95;
+        }else{
+            totalcomdesc = total;
         }
         calc.setQuantidade(quantidade);
-        calc.setPreco(preco);
-        calc.setDescontoAplicado(total);
-        System.out.printf("O preço total é: %.2f\n", total);
+        calc.setPreco(total);
+        calc.setDescontoAplicado(totalcomdesc);
+        System.out.printf("O preço total é: %.2f\n", totalcomdesc);
         return;
 
 
@@ -83,7 +86,8 @@ public class Loja {
     public static void registroVendas(Scanner scan, List<Calculadora> vendas){
         System.out.println("Registro de vendas:");
         for(Calculadora calc : vendas){
-            System.out.printf("Quantidade: %d, Preço: %.2f, Total: %.2f%n",
+            System.out.printf("Quantidade: %d, Preço: %.2f,"+
+             " Total com desconto: %.2f%n",
             calc.getQuantidade(), calc.getPreco(), calc.getDescontoAplicado());
         }
        
