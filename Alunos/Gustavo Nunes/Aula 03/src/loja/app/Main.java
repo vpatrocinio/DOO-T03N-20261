@@ -1,6 +1,7 @@
 package loja.app;
 
 import loja.model.Venda;
+import loja.service.VendaService;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -8,19 +9,32 @@ import java.util.ArrayList;
 public class Main {
 
     private static Scanner scanner = new Scanner(System.in);
+
+    // onde serão armazenadas as vendas
     private static ArrayList<Venda> vendas = new ArrayList<>();
 
     public static void main(String[] args) {
         mostraMenu();
     }
 
-    // mostra menu e direciona para opção escolhida
+    // Mostra menu ao usuário
     private static void mostraMenu() {
 
-         System.out.printf("\n\n[1] - Calcular Preço Total\n" +
-                "[2] - Calcular Troco    \n" +
-                "[3] - Sair \n" +
-                "Entre com opção :");
+        System.out.printf("========================================" +
+                "\n\n[1] - Calcular apenas Preço\n" +
+                "[2] - Calcular apenas Troco\n" +
+                "[3] - Calcular apenas desconto\n" +
+                "[4] - Cadastrar compra\n" +
+                "[5] - Listar compras\n" +
+                "[6] - Sair\n" +
+                "========================================" +
+                "Entre com a opção : ");
+
+        direcionaUzuario();
+    }
+
+    // direciona usuário para opção escolhida
+    private static void direcionaUzuario() {
 
         int op = scanner.nextInt();
 
@@ -37,6 +51,21 @@ public class Main {
                 break;
 
             case 3:
+                calculaDesconto();
+                mostraMenu();
+                break;
+
+            case 4:
+                cadastraCompra();
+                mostraMenu();
+                break;
+
+            case 5:
+                listaCompras();
+                mostraMenu();
+                break;
+
+            case 6:
                 System.out.println("\nENCERRANDO...");
                 break;
 
@@ -55,10 +84,56 @@ public class Main {
         System.out.println("\nValor unitário: ");
         double valUni = scanner.nextDouble();
 
-        double preco = quant * valUni;
+        double preco = VendaService.calculaPreco(quant,valUni);
 
         System.out.printf("\nPreço = R$%.2f",preco);
 
+    }
+
+    // Calculo do troco
+    private static void calculaTroco() {
+
+        System.out.println("\nValor pago: ");
+        double valPag = scanner.nextDouble();
+        System.out.println("\nValor devido: ");
+        double valDev = scanner.nextDouble();
+
+        double troco = VendaService.calculaTroco(valPag,valDev);
+
+        System.out.printf("\nTroco = R$%.2f",troco);
+
+    }
+
+    // calcula desconto
+    private static void calculaDesconto(){
+
+        System.out.println("\nQuntidade: ");
+        int quant = scanner.nextInt();
+        System.out.println("\nValor unitario: ");
+        double valUni = scanner.nextDouble();
+
+        double desconto = VendaService.calculaDesconto(quant,valUni);
+
+        System.out.printf("\nDesconto = R$%.2f",desconto);
+    }
+
+    // Cadastra nova compra
+    private static void cadastraCompra() {
+        System.out.println("\nQuntidade: ");
+        int quant = scanner.nextInt();
+        System.out.println("\nValor unitário: ");
+        double valUni = scanner.nextDouble();
+
+        double desconto = VendaService.calculaDesconto(quant,valUni);
+        double valVenda = VendaService.calculaPreco(quant,valUni);
+        vendas.add(VendaService.cadastraVenda(quant,valVenda,desconto));
+    }
+
+    // Lista compras realizadas
+    private static void listaCompras() {
+        for (Venda m : vendas){
+            System.out.println(m);
+        }
     }
 
 }

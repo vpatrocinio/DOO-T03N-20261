@@ -14,4 +14,9 @@ public class Venda {
         this.desconto = desconto;
     }
 
+    @Override
+    public String toString(){
+        return "  " + id + "  " + quant + "  " + valVen + "  "
+                + desconto + "  " + (valVen-desconto);
+    }
 }

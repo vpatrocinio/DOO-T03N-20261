@@ -5,14 +5,19 @@ import loja.model.Venda;
 public class VendaService {
 
     // Retorna preço
-    public static double calculaPreco(int quant, double valUni) {
+    public static double calculaPreco(int quant,
+                                      double valUni) {
 
         return quant * valUni;
 
     }
 
     // Retorna valor do desconto se aplicavel
-    public static double calculaDesconto(int quantidade, double valor) {
+    public static double calculaDesconto(int quantidade,
+                                         double valUni) {
+
+        double valor = calculaPreco(quantidade,valUni);
+
         if (quantidade > 10){
             return valor * 0.05;
         }
@@ -20,14 +25,16 @@ public class VendaService {
     }
 
     // Retorna troco
-    public static double calculaTroco(double valPag, double valDev) {
+    public static double calculaTroco(double valPag,
+                                      double valDev) {
 
         return valPag - valDev;
 
     }
 
     // Retorna cadastro da venda
-    public static Venda cadastraVenda(int quant, double valVen, double desconto){
+    public static Venda cadastraVenda(int quant, double valVen,
+                                      double desconto){
 
         return new Venda(quant, valVen, desconto);
     }
